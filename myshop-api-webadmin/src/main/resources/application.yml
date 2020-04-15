@@ -1,0 +1,66 @@
+version:
+  user:
+    v1: 1.0.0
+    p1: 9090
+spring:
+  application:
+    name: dubbo-api-webadmin
+  thymeleaf:
+    cache: false # 开发时关闭缓存,不然没法看到实时页面
+    mode: LEGACYHTML5 # 用非严格的 HTML
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+
+server:
+  port: 9000
+
+dubbo:
+  scan:
+    # scan Reference
+    basePackages: top.awslzhang.myshop.api.webadmin
+  ## ApplicationConfig Bean
+  application:
+    id: dubbo-api-webadmin
+    name: dubbo-api-webadmin
+  protocol:
+    id: dubbo
+    name: dubbo
+    serialization: kryo
+  ## RegistryConfig Bean
+  registry:
+    id: zookeeper
+    address: zookeeper://192.168.58.132:2181?backup=192.168.58.132:2182,192.168.58.132:2183
+#    address: zookeeper://192.168.0.203:2181?backup=192.168.0.203:2182,192.168.0.203:2183
+# Dubbo Endpoint (default status is disable)
+endpoints:
+  dubbo:
+    enabled: true
+management:
+  server:
+    port: 9099
+  # Dubbo Health
+  health:
+    dubbo:
+      status:
+        ## StatusChecker Name defaults (default : "memory", "load" )
+        defaults: memory
+  # Enables Dubbo All Endpoints
+  endpoint:
+    dubbo:
+      enabled: true
+    dubbo-shutdown:
+      enabled: true
+    dubbo-configs:
+      enabled: true
+    dubbo-services:
+      enabled: true
+    dubbo-references:
+      enabled: true
+    dubbo-properties:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
